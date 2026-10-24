@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>System Security</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#000;color:#00ff55;
+ font-family:monospace;padding:18px;
+}
+h2{text-align:center;text-shadow:0 0 12px #00ff55}
+.bar{border:1px solid #00ff55;padding:12px;margin:12px 0}
+#terminal{
+ height:48vh;overflow:hidden;overflow-wrap:anywhere;
+ font-size:13px;line-height:1.65;
+ text-shadow:0 0 5px #00ff55;
+}
+#progress{height:5px;background:#15351c;margin-top:10px}
+#fill{height:100%;width:0;background:#00ff55}
+#ending{display:none;text-align:center;padding:25px 8px}
+.warning{color:#fff;font-size:22px}
+</style>
+</head>
+<body>
+<h2>◈ SYSTEM SECURITY ◈</h2>
+<div class="bar">
+  SYSTEM STATUS: <span id="status">INITIALIZING...</span>
+  <div id="progress"><div id="fill"></div></div>
+  <p>PROCESS: <span id="pct">0</span>%</p>
+</div>
+<div id="terminal"></div>
+<div id="ending">
+  <div class="warning">⚠ احتیاط کریں!</div>
+  <h2>آپ کا موبائل ہیک نہیں ہوا 😂</h2>
+  <p>یہ صرف ایک مذاق تھا۔ آپ کا ذاتی ڈیٹا محفوظ ہے۔</p>
+</div>
+<script>
+const terminal=document.getElementById('terminal');
+const lines=[
+'Initializing system interface...',
+'Analyzing browser environment...',
+'Checking available device information...',
+'Inspecting screen configuration...',
+'Scanning simulated system modules...',
+'Loading security protocols...',
+'Analyzing network interface...',
+'Verifying local browser permissions...',
+'Running simulated diagnostic sequence...',
+'Checking security status...',
+'Preparing final system report...'
+];
+let start=Date.now();
+function update(){
+ let elapsed=(Date.now()-start)/1000;
+ let p=Math.min(100,Math.floor(elapsed/30*100));
+ document.getElementById('pct').textContent=p;
+ document.getElementById('fill').style.width=p+'%';
+ if(elapsed<30){
+   document.getElementById('status').textContent=
+     ['INITIALIZING','SCANNING','ANALYZING','PROCESSING'][Math.floor(elapsed/4)%4];
+   let line=lines[Math.floor(Math.random()*lines.length)];
+   let row='['+new Date().toLocaleTimeString()+'] '+line;
+   terminal.textContent+=row+'\n';
+   let rows=terminal.textContent.split('\n');
+   terminal.textContent=rows.slice(-19).join('\n');
+   setTimeout(update,Math.random()*350+180);
+ }else{
+   document.getElementById('status').textContent='COMPLETE';
+   terminal.style.display='none';
+   document.getElementById('ending').style.display='block';
+ }
+}
+update();
+</script>
+</body>
+</html>
